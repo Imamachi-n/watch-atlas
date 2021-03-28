@@ -1,12 +1,13 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
-import { getTextContent } from '../lib/utils';
+import { getTextContent, getURL } from '../lib/utils';
+import { getYYYYMMDD } from '../lib/timeUtil';
 
 // const crowller = new Crowller();
 (async () => {
   const options = {
-    headless: false, // ヘッドレスをオフに
+    // headless: false, // ヘッドレスをオフに
     slowMo: 10, // 動作を遅く
   };
   const browser = await puppeteer.launch(options);
@@ -16,22 +17,24 @@ import { getTextContent } from '../lib/utils';
     'https://www.baume-et-mercier.com/jp/ja/%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81/%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E6%99%82%E8%A8%88.html'
   );
 
-  // 全部のHTMLコンテンツを取得
-  //   const content = await page.content();
-  //   console.log(content.toString());
-  //   await page.screenshot({ path: "example.png" });
-
   // 以下のセレクタでデータを引っ掛ける
-  const initialContents = await page.$$('div.bem-product-item__link');
-  console.log(`件数: ${initialContents.length}件`);
+  const initialContents = await page.$$('div.bem-product-item__link > a');
+  let urls = [];
+  for (let i = 0; i < initialContents.length; i++) {
+    const url = await getURL(initialContents[i]);
+    // URL が取得できなかった場合、スキップ
+    if (url) {
+      urls.push(url);
+    }
+  }
+  console.log(`件数: ${urls.length}件`);
 
   const results = [];
   // FIXME: テスト用
-  for (let i = 0; i < 5; i++) {
-    //   for (let i = 0; i < initialContents.length; i++) {
-    const watchContents = await page.$$('div.bem-product-item__link');
-    watchContents[i].click();
-    await page.waitForNavigation({ waitUntil: ['load', 'networkidle2'] });
+  // for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < urls.length; i++) {
+    await page.goto(urls[i]);
+    await page.waitForSelector('div.product-specifications__list'); // 特定のセレクタがロードされるまで待ち
 
     // 基本情報の取得(id, productName, detail)
     const basicElements = await page.$(
@@ -109,18 +112,20 @@ import { getTextContent } from '../lib/utils';
       detail: detailInfo,
     });
 
-    await page.goBack();
+    console.log(`${i} - ${watchId} - ${watchTitle}`);
   }
 
   console.log(JSON.stringify(results, null, 2));
   fs.writeFileSync(
-    path.join(__dirname, '..', '..', 'data', 'baume-et-mercier_all.json'),
+    path.join(
+      __dirname,
+      '..',
+      '..',
+      'data',
+      `baume-et-mercier_all-${getYYYYMMDD(new Date())}.json`
+    ),
     JSON.stringify(results)
   );
-
-  //   const context = await elements?.getProperty("textContent");
-  //   const text = await context?.jsonValue();
-  //   console.log(text);
 
   await browser.close();
 })();
