@@ -1,0 +1,26 @@
+{
+  "name": "webscraping-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "dev": "ts-node ./src/index.ts",
+    "dev:b": "ts-node ./src/baume-et-mercier/index.ts",
+    "dev:o": "ts-node ./src/oris/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "@types/puppeteer": "^5.4.3",
+    "@types/superagent": "^4.1.10",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "puppeteer": "^8.0.0",
+    "superagent": "^6.1.0"
+  }
+}
