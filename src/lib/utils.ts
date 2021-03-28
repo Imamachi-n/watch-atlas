@@ -24,7 +24,7 @@ export const getTextContent = async (
  * @param elements ElementHandle represents an in-page DOM element
  * @param selector セレクタ
  */
-export const getURL = async (
+export const getURLContent = async (
   elementHandler: puppeteer.ElementHandle<Element>
 ): Promise<string | undefined> => {
   try {
@@ -34,4 +34,28 @@ export const getURL = async (
     // console.log(error);
     return undefined;
   }
+};
+
+/**
+ * URL 文字列の配列を取得
+ * @param elements -
+ * @param selector セレクタ
+ * @returns URL 文字列の配列
+ */
+export const getURL = async (
+  elements: puppeteer.ElementHandle<Element>[]
+): Promise<string[]> => {
+  let urls = [];
+  for (let i = 0; i < elements.length; i++) {
+    const url = await getURLContent(elements[i]);
+    // URL が取得できなかった場合、スキップ
+    if (url) {
+      urls.push(url);
+    }
+  }
+
+  console.log(`件数: ${urls.length}件`);
+  console.log(`スキップ件数: ${elements.length - urls.length}件`);
+
+  return urls;
 };

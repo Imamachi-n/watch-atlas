@@ -17,17 +17,8 @@ import { getYYYYMMDD } from '../lib/timeUtil';
     'https://www.baume-et-mercier.com/jp/ja/%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81/%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E6%99%82%E8%A8%88.html'
   );
 
-  // 以下のセレクタでデータを引っ掛ける
-  const initialContents = await page.$$('div.bem-product-item__link > a');
-  let urls = [];
-  for (let i = 0; i < initialContents.length; i++) {
-    const url = await getURL(initialContents[i]);
-    // URL が取得できなかった場合、スキップ
-    if (url) {
-      urls.push(url);
-    }
-  }
-  console.log(`件数: ${urls.length}件`);
+  // セレクタで URLデータを取得する
+  const urls = await getURL(await page.$$('div.bem-product-item__link > a'));
 
   const results = [];
   // FIXME: テスト用
