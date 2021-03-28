@@ -1,6 +1,27 @@
 import puppeteer from 'puppeteer';
 
 /**
+ * 初期ページに遷移
+ * @param url URL 文字列
+ * @param slowMo 動作を遅く
+ * @param headless ヘッドレスモード
+ */
+export const gotoInitialPage = async (
+  url: string,
+  slowMo: number = 10,
+  headless: boolean = true
+): Promise<{ browser: puppeteer.Browser; page: puppeteer.Page }> => {
+  const options = {
+    headless, // ヘッドレスをオフに
+    slowMo, // 動作を遅く
+  };
+  const browser = await puppeteer.launch(options);
+  const page = await browser.newPage();
+  await page.goto(url);
+  return { browser, page };
+};
+
+/**
  * element からテキストを抽出
  * @param elements ElementHandle represents an in-page DOM element
  * @param selector セレクタ

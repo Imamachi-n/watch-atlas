@@ -1,20 +1,15 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
-import { getTextContent, getURL } from '../lib/utils';
+import { getTextContent, getURL, gotoInitialPage } from '../lib/utils';
 import { getYYYYMMDD } from '../lib/timeUtil';
 
-// const crowller = new Crowller();
 (async () => {
-  const options = {
-    // headless: false, // ヘッドレスをオフに
-    slowMo: 10, // 動作を遅く
-  };
-  const browser = await puppeteer.launch(options);
-  const page = await browser.newPage();
-  await page.goto(
+  // 検索ページを開く
+  const { browser, page } = await gotoInitialPage(
     // すべてのコレクション
-    'https://www.baume-et-mercier.com/jp/ja/%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81/%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E6%99%82%E8%A8%88.html'
+    'https://www.baume-et-mercier.com/jp/ja/%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81/%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E6%99%82%E8%A8%88.html',
+    10
   );
 
   // セレクタで URLデータを取得する
