@@ -1,0 +1,7 @@
+{
+  "prettier.trailingComma": "none",
+  "prettier.arrowParens": "avoid",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
