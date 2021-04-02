@@ -26,8 +26,8 @@ export class LambdaBase extends Stack {
   protected createLambdaBuilder(
     scope: Construct,
     handler: {
-      srcPath: string;
       entryPoint: string;
+      handler: string;
       scheduleCron?: string;
       memorySize?: number;
       timeout?: Duration;
@@ -40,10 +40,11 @@ export class LambdaBase extends Stack {
 
     // Lambda関数の生成
     const pfLambda = new lambdaFn.NodejsFunction(scope, handler.entryPoint, {
-      functionName: `${this.lambdaPrefix}-${this.envName}-${handler.entryPoint}`,
+      functionName: `${this.lambdaPrefix}-${this.envName}-${handler.handler}`,
       runtime: lambda.Runtime.NODEJS_14_X,
       memorySize,
-      handler: `${handler.srcPath}/${handler.entryPoint}`,
+      entry: handler.entryPoint,
+      handler: handler.handler,
       timeout,
       bundling: {
         externalModules: [
@@ -59,7 +60,7 @@ export class LambdaBase extends Stack {
     // CloudWatch Eventの付与
     const invokeRule = new events.Rule(
       scope,
-      `${this.lambdaPrefix}-${handler.entryPoint}-invoke`,
+      `${this.lambdaPrefix}-${handler.handler}-invoke`,
       {
         schedule: events.Schedule.expression(handler.scheduleCron),
       }

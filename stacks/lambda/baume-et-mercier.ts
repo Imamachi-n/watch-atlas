@@ -8,9 +8,9 @@ export class baumeEtMercierLambda extends LambdaBase {
   constructor(scope: Construct, id: string, props: LambdaProps) {
     super(scope, id, props);
 
-    this.createLambdaBuilder(scope, {
-      srcPath: 'src',
-      entryPoint: 'testFn',
+    this.createLambdaBuilder(this, {
+      entryPoint: 'src/index.ts',
+      handler: 'testFn',
     });
   }
 }
