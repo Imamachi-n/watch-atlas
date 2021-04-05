@@ -4,4 +4,4 @@ import * as core from '@aws-cdk/core';
 export const getEnvName = (scope: core.Construct): string =>
   scope.node.tryGetContext('env');
 
-export const APP_NAME = 'watchAtlas';
+export const APP_NAME = 'watch-atlas';

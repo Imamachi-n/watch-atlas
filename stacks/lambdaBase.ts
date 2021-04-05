@@ -4,9 +4,11 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as events from '@aws-cdk/aws-events';
 import * as targets from '@aws-cdk/aws-events-targets';
 import { APP_NAME } from './context';
+import { Bucket } from '@aws-cdk/aws-s3';
 
 export type LambdaProps = {
   envName: string;
+  dataLakeBucket: Bucket; // データレイク用 S3 バケット
 } & StackProps;
 
 /**
@@ -15,11 +17,13 @@ export type LambdaProps = {
 export class LambdaBase extends Stack {
   protected readonly envName: string;
   protected readonly lambdaPrefix: string = APP_NAME;
+  protected readonly dataLakeBucket: Bucket; // データレイク用 S3 バケット
 
   constructor(scope: Construct, id: string, props: LambdaProps) {
     super(scope, id, props);
-    const { envName } = props;
+    const { envName, dataLakeBucket } = props;
     this.envName = envName;
+    this.dataLakeBucket = dataLakeBucket;
   }
 
   // Lambda関数を生成する
@@ -53,6 +57,9 @@ export class LambdaBase extends Stack {
         ],
       },
     });
+
+    // データレイク用の S3 バケットへの読み書き権限を付与
+    this.dataLakeBucket.grantReadWrite(pfLambda);
 
     // Cron式の指定がない場合、CloudWatch Eventを付与しない
     if (!handler.scheduleCron) return pfLambda;
