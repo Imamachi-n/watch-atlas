@@ -6,10 +6,11 @@
     "watch-atlas": "bin/cdkEntryPoint.js"
   },
   "scripts": {
-    "build": "tsc --outDir dist/",
+    "build": "rm -rf dist/ && tsc --outDir dist/",
     "deploy:prod": "cdk deploy '*' -c env=prod --require-approval never",
+    "destroy:prod": "cdk destroy '*' -c env=prod",
     "dev": "ts-node ./src/index.ts",
-    "dev:b": "ts-node ./src/baume-et-mercier/index.ts",
+    "dev:b": "ts-node ./src/local/baume-et-mercier.local.ts",
     "dev:o": "ts-node ./src/oris/index.ts",
     "ncu": "ncu",
     "ncu:u": "ncu -u"
@@ -59,7 +60,6 @@
   "dependencies": {
     "aws-sdk": "^2.878.0",
     "dayjs": "^1.10.4",
-    "puppeteer": "^8.0.0",
-    "superagent": "^6.1.0"
+    "puppeteer": "^8.0.0"
   }
 }

@@ -1,6 +1,5 @@
-import puppeteer from 'puppeteer';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { getTextContent, getURL, gotoInitialPage } from '../lib/utils';
 import { getYYYYMMDD } from '../lib/timeUtil';
 

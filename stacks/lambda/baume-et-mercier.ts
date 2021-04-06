@@ -8,9 +8,29 @@ export class baumeEtMercierLambda extends LambdaBase {
   constructor(scope: Construct, id: string, props: LambdaProps) {
     super(scope, id, props);
 
-    this.createLambdaBuilder(this, {
+    this.createLambdaFn(this, {
       entryPoint: 'src/index.ts',
-      handler: 'testFn',
+      name: 'testFn',
     });
+
+    const baseName = 'getBalmeWatchUrlLambda';
+    const baseFn = this.createLambdaFn(this, {
+      entryPoint: 'src/index.ts',
+      name: baseName,
+    });
+    const subTaskName = 'getBalmeWatchInfoLambda';
+    const subTaskFn = this.createLambdaFn(this, {
+      entryPoint: 'src/index.ts',
+      name: subTaskName,
+    });
+
+    // Web スクレイピング処理(sfn定義)
+    this.createWebScrapingSfn(
+      baseFn,
+      baseName,
+      subTaskFn,
+      subTaskName,
+      'balme-watch-scraping'
+    );
   }
 }

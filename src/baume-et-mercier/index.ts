@@ -1,19 +1,37 @@
-import puppeteer from 'puppeteer';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { getTextContent, getURL, gotoInitialPage } from '../lib/utils';
 import { getYYYYMMDD } from '../lib/timeUtil';
+import { BALUE_WATCH_LIST } from './constants';
+import { divideSubArray } from '../lib/arrayUtil';
 
-(async () => {
+/**
+ * Balue & Mercier の時計 URL リストの取得
+ * @returns 時計 URL リスト
+ */
+export const getBalueWatchUrl = async () => {
   // 検索ページを開く
   const { browser, page } = await gotoInitialPage(
     // すべてのコレクション
-    'https://www.baume-et-mercier.com/jp/ja/%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81/%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E6%99%82%E8%A8%88.html',
+    BALUE_WATCH_LIST.URL,
     10
   );
 
-  // セレクタで URLデータを取得する
-  const urls = await getURL(await page.$$('div.bem-product-item__link > a'));
+  // セレクタで URLデータを取得し、配列で返す
+  const urls = divideSubArray(
+    await getURL(await page.$$(BALUE_WATCH_LIST.ITEM_A_TAG))
+  );
+  await browser.close();
+  return urls;
+};
+
+export const getBaluWatchInfo = async (urls: string[]) => {
+  // 検索ページを開く
+  const { browser, page } = await gotoInitialPage(
+    // すべてのコレクション
+    BALUE_WATCH_LIST.URL,
+    10
+  );
 
   const results = [];
   // FIXME: テスト用
@@ -45,7 +63,7 @@ import { getYYYYMMDD } from '../lib/timeUtil';
       // 項目のタイトル
       const head = await getTextContent(element, 'h4');
       if (!head) {
-        console.log(
+        console.error(
           'ヘッダーが見つかりませんでした…サイト内容を確認しましょう。'
         );
         continue;
@@ -114,4 +132,4 @@ import { getYYYYMMDD } from '../lib/timeUtil';
   );
 
   await browser.close();
-})();
+};
