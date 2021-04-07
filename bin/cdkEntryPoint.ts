@@ -4,6 +4,10 @@ import * as cdk from '@aws-cdk/core';
 import { baumeEtMercierLambda } from '../stacks/lambda/baume-et-mercier';
 import { APP_NAME, getEnvName } from '../stacks/context';
 import { S3 } from '../stacks/s3';
+import { bundlePackages } from './preprocess';
+
+// lambda layer 向けのバンドル処理
+bundlePackages();
 
 const app = new cdk.App();
 const envName = getEnvName(app); // 環境名の取得
