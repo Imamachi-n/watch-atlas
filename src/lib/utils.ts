@@ -1,4 +1,5 @@
-import * as puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
+import { Browser, ElementHandle, Page } from 'puppeteer-core';
 
 /**
  * 初期ページに遷移
@@ -10,12 +11,16 @@ export const gotoInitialPage = async (
   url: string,
   slowMo: number = 10,
   headless: boolean = true
-): Promise<{ browser: puppeteer.Browser; page: puppeteer.Page }> => {
+): Promise<{ browser: Browser; page: Page }> => {
   const options = {
-    headless, // ヘッドレスをオフに
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless, // ヘッドレスをオフに
+    ignoreHTTPSErrors: true,
     slowMo, // 動作を遅く
   };
-  const browser = await puppeteer.launch(options);
+  const browser = await chromium.puppeteer.launch(options);
   const page = await browser.newPage();
   await page.goto(url);
   return { browser, page };
@@ -27,7 +32,7 @@ export const gotoInitialPage = async (
  * @param selector セレクタ
  */
 export const getTextContent = async (
-  elements: puppeteer.ElementHandle<Element> | null,
+  elements: ElementHandle<Element> | null,
   selector: string
 ): Promise<string | undefined> => {
   try {
@@ -46,7 +51,7 @@ export const getTextContent = async (
  * @param selector セレクタ
  */
 export const getURLContent = async (
-  elementHandler: puppeteer.ElementHandle<Element>
+  elementHandler: ElementHandle<Element>
 ): Promise<string | undefined> => {
   try {
     const textContext = await elementHandler?.getProperty('href');
@@ -64,7 +69,7 @@ export const getURLContent = async (
  * @returns URL 文字列の配列
  */
 export const getURL = async (
-  elements: puppeteer.ElementHandle<Element>[]
+  elements: ElementHandle<Element>[]
 ): Promise<string[]> => {
   let urls = [];
   for (let i = 0; i < elements.length; i++) {

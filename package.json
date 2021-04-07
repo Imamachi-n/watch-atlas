@@ -59,7 +59,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.878.0",
+    "chrome-aws-lambda": "^8.0.2",
     "dayjs": "^1.10.4",
-    "puppeteer": "^8.0.0"
+    "puppeteer-core": "^8.0.0"
   }
 }
