@@ -5,6 +5,7 @@ import { baumeEtMercierLambda } from '../stacks/lambda/baume-et-mercier';
 import { APP_NAME, getEnvName } from '../stacks/context';
 import { S3 } from '../stacks/s3';
 import { bundlePackages } from './preprocess';
+import { LambdaLayer } from '../stacks/lambdaLayer';
 
 // lambda layer 向けのバンドル処理
 bundlePackages();
@@ -17,6 +18,15 @@ const s3 = new S3(app, `${APP_NAME}-stack-${envName}-s3`, {
   envName,
 });
 
+// Lambda Layer の設定用 Stack
+const lambdaLayerStack = new LambdaLayer(
+  app,
+  `${APP_NAME}-stack-${envName}-lambda-layer`,
+  {
+    envName,
+  }
+);
+
 // Lambda関数の設定用 Stack
 const lambda = new baumeEtMercierLambda(
   app,
@@ -24,6 +34,7 @@ const lambda = new baumeEtMercierLambda(
   {
     envName,
     dataLakeBucket: s3.dataLakeBucket,
+    lambdaLayer: lambdaLayerStack.lambdaLayer,
   }
 );
 

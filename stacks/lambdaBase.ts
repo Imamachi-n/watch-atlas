@@ -7,10 +7,12 @@ import * as sfn from '@aws-cdk/aws-stepfunctions';
 import * as sfnTasks from '@aws-cdk/aws-stepfunctions-tasks';
 import { APP_NAME } from './context';
 import { Bucket } from '@aws-cdk/aws-s3';
+import { LayerVersion } from '@aws-cdk/aws-lambda';
 
 export type LambdaProps = {
   envName: string;
   dataLakeBucket: Bucket; // データレイク用 S3 バケット
+  lambdaLayer: LayerVersion; // Lambda Layer のスタック
 } & StackProps;
 
 /**
@@ -20,12 +22,14 @@ export class LambdaBase extends Stack {
   protected readonly envName: string;
   protected readonly lambdaPrefix: string = APP_NAME;
   protected readonly dataLakeBucket: Bucket; // データレイク用 S3 バケット
+  protected readonly lambdaLayer: LayerVersion; // Lambda Layer
 
   constructor(scope: Construct, id: string, props: LambdaProps) {
     super(scope, id, props);
-    const { envName, dataLakeBucket } = props;
+    const { envName, dataLakeBucket, lambdaLayer } = props;
     this.envName = envName;
     this.dataLakeBucket = dataLakeBucket;
+    this.lambdaLayer = lambdaLayer;
   }
 
   /**

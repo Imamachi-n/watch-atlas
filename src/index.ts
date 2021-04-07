@@ -12,7 +12,6 @@ export const getBalmeWatchUrlLambda = async (
   event: any,
   context: any
 ): Promise<{ urls: string[][] }> => {
-  console.log('object');
   const urls = await getBalueWatchUrl();
   return { urls };
 };
