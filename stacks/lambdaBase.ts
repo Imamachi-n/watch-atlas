@@ -112,14 +112,18 @@ export class LambdaBase extends Stack {
     itemName: string = 'urls'
   ) {
     // URL リストを取得する処理
-    const baseTask = new sfnTasks.LambdaInvoke(this, `${baseName}-sfn-task`, {
+    const baseTask = new sfnTasks.LambdaInvoke(this, `${baseName}-URLを取得`, {
       lambdaFunction: baseFn,
       payloadResponseOnly: true,
     });
-    const subTask = new sfnTasks.LambdaInvoke(this, `${subTaskName}-sfn-task`, {
-      inputPath: '$',
-      lambdaFunction: subTaskFn,
-    });
+    const subTask = new sfnTasks.LambdaInvoke(
+      this,
+      `${subTaskName}-時計情報を取得`,
+      {
+        inputPath: '$',
+        lambdaFunction: subTaskFn,
+      }
+    );
 
     // 並列処理（同じ処理を同時実行）
     const subTaskMap = new sfn.Map(this, `${subTaskName}-sfn-map-task`, {
@@ -129,7 +133,7 @@ export class LambdaBase extends Stack {
     subTaskMap.iterator(subTask);
 
     // 終了処理
-    const done = new sfn.Pass(this, 'Done', {});
+    const done = new sfn.Pass(this, `${subTaskName}-正常に終了したよ！`, {});
 
     // sfn の定義
     const definition = baseTask.next(subTaskMap).next(done);

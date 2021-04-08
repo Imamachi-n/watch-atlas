@@ -1,4 +1,8 @@
-import { getBalueWatchUrl } from './baume-et-mercier';
+import { getBalueWatchUrl, getBaluWatchInfo } from './baume-et-mercier';
+import { WatchItem } from './lib/arrayUtil';
+import { DATALAKE_S3_BUCKET } from './lib/constants';
+import { getYYYYMMDD } from './lib/timeUtil';
+import { writeFileOnS3 } from './lib/writeFile';
 
 // テスト
 export const testFn = async (event: any, context: any): Promise<string> => {
@@ -11,7 +15,7 @@ export const testFn = async (event: any, context: any): Promise<string> => {
 export const getBalmeWatchUrlLambda = async (
   event: any,
   context: any
-): Promise<{ urls: string[][] }> => {
+): Promise<{ urls: WatchItem[] }> => {
   const urls = await getBalueWatchUrl();
   return { urls };
 };
@@ -20,8 +24,15 @@ export const getBalmeWatchUrlLambda = async (
  * 時計情報の取得
  */
 export const getBalmeWatchInfoLambda = async (
-  event: any,
+  event: WatchItem,
   context: any
 ): Promise<any> => {
-  return event;
+  const results = await getBaluWatchInfo(event.item);
+  await writeFileOnS3(
+    JSON.stringify(results),
+    DATALAKE_S3_BUCKET,
+    `balueEtMercier/balueEtMercier_${getYYYYMMDD(
+      new Date()
+    )}_${event.index.toString().padStart(5, '0')}.json`
+  );
 };

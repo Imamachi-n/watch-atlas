@@ -1,7 +1,4 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { getTextContent, getURL, gotoInitialPage } from '../lib/utils';
-import { getYYYYMMDD } from '../lib/timeUtil';
 import { BALUE_WATCH_LIST } from './constants';
 import { divideSubArray } from '../lib/arrayUtil';
 
@@ -34,8 +31,6 @@ export const getBaluWatchInfo = async (urls: string[]) => {
   );
 
   const results = [];
-  // FIXME: テスト用
-  // for (let i = 0; i < 1; i++) {
   for (let i = 0; i < urls.length; i++) {
     await page.goto(urls[i]);
     await page.waitForSelector('div.product-specifications__list'); // 特定のセレクタがロードされるまで待ち
@@ -119,17 +114,6 @@ export const getBaluWatchInfo = async (urls: string[]) => {
     console.log(`${i} - ${watchId} - ${watchTitle}`);
   }
 
-  console.log(JSON.stringify(results, null, 2));
-  fs.writeFileSync(
-    path.join(
-      __dirname,
-      '..',
-      '..',
-      'data',
-      `baume-et-mercier_all-${getYYYYMMDD(new Date())}.json`
-    ),
-    JSON.stringify(results)
-  );
-
   await browser.close();
+  return results;
 };
