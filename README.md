@@ -5,8 +5,13 @@ Web スクレイピングで各ブランドの機械式時計の情報を取得�
 ## TODO
 
 - AWS CDK
-  - Step functions を使う前提
-    - 1 つ目の lambda 関数で URL を取得して、2 つ目の lambda 関数で並列処理で時計データを取りに行くかな？
+  - Glue Studio で ETL 処理をプロトタイピング
+  - Glue - S3 - Athena - QuickSight でサーバレス分析基盤を作る
+- コスト管理
+  - AWS Budgets の予算超過アラートを Slack へ通知
+    - https://dev.classmethod.jp/articles/notify-slack-budgets-with-cloudformation/
+  - AWS Budget Action を設定する
+    - https://blog.serverworks.co.jp/aws-budgets-actions
 
 ## トラブルシューティング
 
