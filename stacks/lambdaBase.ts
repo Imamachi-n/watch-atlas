@@ -55,19 +55,28 @@ export class LambdaBase extends Stack {
 
     // Lambda関数の生成
     const lambdaId = `${this.lambdaPrefix}-${this.envName}-${handler.name}`;
-    const pfLambda = new lambdaFn.NodejsFunction(scope, lambdaId, {
-      functionName: lambdaId,
+    // const pfLambda = new lambdaFn.NodejsFunction(scope, lambdaId, {
+    //   functionName: lambdaId,
+    //   runtime: lambda.Runtime.NODEJS_14_X,
+    //   memorySize,
+    //   entry: handler.entryPoint,
+    //   handler: handler.name,
+    //   timeout,
+    //   bundling: {
+    //     externalModules: [
+    //       'aws-sdk', // Use the 'aws-sdk' available in the Lambda runtime
+    //       'cool-module', // 'cool-module' is already available in a Layer
+    //     ],
+    //   },
+    // });
+    const pfLambda = new lambda.Function(scope, handler.name, {
+      functionName: `ascure-operation-${this.envName}-${handler.name}`,
       runtime: lambda.Runtime.NODEJS_14_X,
+      layers: [this.lambdaLayer],
+      code: lambda.Code.fromAsset('dist/src'),
       memorySize,
-      entry: handler.entryPoint,
-      handler: handler.name,
+      handler: `${handler.entryPoint}.${handler.name}`,
       timeout,
-      bundling: {
-        externalModules: [
-          'aws-sdk', // Use the 'aws-sdk' available in the Lambda runtime
-          'cool-module', // 'cool-module' is already available in a Layer
-        ],
-      },
     });
 
     // データレイク用の S3 バケットへの読み書き権限を付与

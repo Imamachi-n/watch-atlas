@@ -9,14 +9,13 @@ import { Browser, ElementHandle, Page } from 'puppeteer-core';
  */
 export const gotoInitialPage = async (
   url: string,
-  slowMo: number = 10,
-  headless: boolean = true
+  slowMo: number = 10
 ): Promise<{ browser: Browser; page: Page }> => {
   const options = {
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
-    headless: chromium.headless, // ヘッドレスをオフに
+    headless: chromium.headless, // ローカル環境の場合、ヘッドレスをオフに
     ignoreHTTPSErrors: true,
     slowMo, // 動作を遅く
   };
@@ -72,8 +71,8 @@ export const getURL = async (
   elements: ElementHandle<Element>[]
 ): Promise<string[]> => {
   let urls = [];
-  for (let i = 0; i < elements.length; i++) {
-    const url = await getURLContent(elements[i]);
+  for (const element of elements) {
+    const url = await getURLContent(element);
     // URL が取得できなかった場合、スキップ
     if (url) {
       urls.push(url);

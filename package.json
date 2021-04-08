@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "rm -rf dist/ && tsc --outDir dist/",
-    "deploy:prod": "cdk deploy '*' -c env=prod --require-approval never",
+    "deploy:prod": "yarn build && cdk deploy '*' -c env=prod --require-approval never",
     "destroy:prod": "cdk destroy '*' -c env=prod",
     "dev": "ts-node ./src/index.ts",
     "dev:b": "ts-node ./src/local/baume-et-mercier.local.ts",

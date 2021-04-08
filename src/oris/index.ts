@@ -8,8 +8,7 @@ import { getYYYYMMDD } from '../lib/timeUtil';
   const { browser, page } = await gotoInitialPage(
     // すべてのコレクション
     'https://www.oris.ch/jp/watchfinder',
-    10,
-    false
+    10
   );
 
   // セレクタで URLデータを取得する

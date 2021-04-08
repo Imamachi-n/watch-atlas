@@ -9,18 +9,21 @@ export class baumeEtMercierLambda extends LambdaBase {
     super(scope, id, props);
 
     this.createLambdaFn(this, {
-      entryPoint: 'src/index.ts',
+      // entryPoint: 'src/index.ts',
+      entryPoint: 'index',
       name: 'testFn',
     });
 
     const baseName = 'getBalmeWatchUrlLambda';
     const baseFn = this.createLambdaFn(this, {
-      entryPoint: 'src/index.ts',
+      // entryPoint: 'src/index.ts',
+      entryPoint: 'index',
       name: baseName,
     });
     const subTaskName = 'getBalmeWatchInfoLambda';
     const subTaskFn = this.createLambdaFn(this, {
-      entryPoint: 'src/index.ts',
+      // entryPoint: 'src/index.ts',
+      entryPoint: 'index',
       name: subTaskName,
     });
 
