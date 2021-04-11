@@ -1,48 +1,46 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
 
   parserOptions: {
-    project: "./tsconfig.json",
+    project: './tsconfig.json',
   },
 
-  plugins: ["@typescript-eslint", "prettier"],
+  plugins: ['@typescript-eslint', 'prettier'],
 
   extends: [
-    "eslint:recommended",
+    'eslint:recommended',
 
     // JavaScript Standard Coding Style
-    "standard",
+    'standard',
 
     // eslint-plugin-import
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript", // for @typescript-eslint/parser
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript', // for @typescript-eslint/parser
 
     // @typescript-eslint
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
 
     // eslint-plugin-jest
-    "plugin:jest/recommended",
+    'plugin:jest/recommended',
 
     // Prettier: 一番最後に設定すること（ESLintがPrettierと競合しないように、ESLintの設定を最後に上書きするため）
-    "plugin:prettier/recommended",
-    "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/standard",
+    'plugin:prettier/recommended',
+    'prettier',
   ],
 
   rules: {
     // ESLint
-    "no-console": "off",
+    'no-console': 'off',
   },
 
   settings: {
     // eslint-plugin-import
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
 
       // eslint-import-resolver-typescript
@@ -51,8 +49,8 @@ module.exports = {
       },
     },
 
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
 };
