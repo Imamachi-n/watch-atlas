@@ -15,6 +15,11 @@ Web スクレイピングで各ブランドの機械式時計の情報を取得�
 
 ## トラブルシューティング
 
+### puppeteer を lambda layer に含めるとバンドルサイズの上限 250 MB を超えてしまう
+
+`puppeteer` 本体に入っている chromium ではなく、`chrome-aws-lambda` を使う。  
+つまり、`puppeteer-core` と `chrome-aws-lambda` を `dependencies` を追加して lambda layer を作成する。
+
 ### puppeteer と puppeteer-core の使い分け
 
 開発環境で puppeteer を使い、lambda 上で puppeteer-core + chrome-aws-lambda を使う。
