@@ -13,7 +13,8 @@
     "dev:b": "ts-node ./src/local/baume-et-mercier.local.ts",
     "dev:o": "ts-node ./src/oris/index.ts",
     "ncu": "ncu",
-    "ncu:u": "ncu -u"
+    "ncu:u": "ncu -u",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -50,6 +51,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^26.6.3",
+    "jest-puppeteer": "^4.4.0",
     "npm-check-updates": "^11.3.0",
     "prettier": "^2.2.1",
     "puppeteer": "^8.0.0",
