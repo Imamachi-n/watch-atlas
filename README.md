@@ -25,6 +25,18 @@ Web スクレイピングで各ブランドの機械式時計の情報を取得�
 開発環境で puppeteer を使い、lambda 上で puppeteer-core + chrome-aws-lambda を使う。
 最初は、`puppeteer` を読み込もうとし、パッケージがない場合、`puppeteer-core` を読み込む仕様になっている。
 
+### puppetter を jest でテストするには
+
+[jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) が必要。TypeScript では以下のパッケージも加えてインストール。
+
+```zsh
+yarn add --dev \
+jest-puppeteer \
+@types/puppeteer \
+@types/jest-environment-puppeteer \
+@types/expect-puppeteer
+```
+
 ## 参考文献
 
 - https://github.com/puppeteer/puppeteer/issues/3051
