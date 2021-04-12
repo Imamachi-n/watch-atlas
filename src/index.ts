@@ -10,7 +10,7 @@ export const testFn = async (event: any, context: any): Promise<string> => {
 };
 
 /**
- * URL リストの取得
+ * Balue & Mercier URL リストの取得
  */
 export const getBalmeWatchUrlLambda = async (
   event: any,
@@ -21,7 +21,7 @@ export const getBalmeWatchUrlLambda = async (
 };
 
 /**
- * 時計情報の取得
+ * Balue & Mercier の時計情報の取得
  */
 export const getBalmeWatchInfoLambda = async (
   event: WatchItem,
