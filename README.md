@@ -4,14 +4,44 @@ Web スクレイピングで各ブランドの機械式時計の情報を取得�
 
 ## TODO
 
-- AWS CDK
-  - Glue Studio で ETL 処理をプロトタイピング
-  - Glue - S3 - Athena - QuickSight でサーバレス分析基盤を作る
-- コスト管理
-  - AWS Budgets の予算超過アラートを Slack へ通知
+- [ ] データ構造
+  - [ ] データを保存する形を決める
+- [ ] AWS CDK
+  - [ ] Glue Studio で ETL 処理をプロトタイピング
+  - [ ] Glue - S3 - Athena - QuickSight でサーバレス分析基盤を作る
+- [ ] コスト管理
+  - [ ] AWS Budgets の予算超過アラートを Slack へ通知
     - https://dev.classmethod.jp/articles/notify-slack-budgets-with-cloudformation/
-  - AWS Budget Action を設定する
+  - [ ] AWS Budget Action を設定する
     - https://blog.serverworks.co.jp/aws-budgets-actions
+
+## データ構造（作成中）
+
+| 列名           | 具体例          |
+| -------------- | --------------- |
+| Brand          | Baume & Mercier |
+| Family         | Baume           |
+| Reference      | Baume 10604     |
+| Name           | Baume 10604     |
+| Detail         | Baume 10604     |
+| Movement       | RONDA 6004 D    |
+| MovementEnergy | クオーツ        |
+| PowerReserve   | 38 時間         |
+
+Additional 24 Hour Hand (adjustable), Hours, Minutes, Small Seconds | Date | Chronograph
+Limited: No
+Case
+Material: Stainless Steel
+Glass: Sapphire
+Back: Closed
+Shape: Round
+Diameter: 42.00 mm
+Height: 13.00 mm
+W/R: 30.00 m
+Dial
+Color: White
+Indexes: Mixed
+Hands: Feuille
 
 ## トラブルシューティング
 
