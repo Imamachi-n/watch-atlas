@@ -27,7 +27,6 @@ Web スクレイピングで各ブランドの機械式時計の情報を取得�
 | Movement       | RONDA 6004 D    |
 | MovementEnergy | クオーツ        |
 | PowerReserve   | 38 時間         |
-| Case   | 38 時間         |
 
 Additional 24 Hour Hand (adjustable), Hours, Minutes, Small Seconds | Date | Chronograph
 Limited: No
@@ -38,7 +37,7 @@ Back: Closed
 Shape: Round
 Diameter: 42.00 mm
 Height: 13.00 mm
-W/R: 30.00
+W/R: 30.00 m
 Dial
 Color: White
 Indexes: Mixed
