@@ -2,6 +2,53 @@
 
 Web スクレイピングで各ブランドの機械式時計の情報を取得するスクリプト群
 
+## Get Started
+
+### パッケージのインストール
+
+yarn, node.js をインストール後、以下のコマンドを実行してパッケージをインストール。
+
+```zsh
+yarn
+```
+
+### AWS へのデプロイ(Stack の構築)
+
+以下のコマンドを実行して、AWS CDK を使って AWS へデプロイ。
+
+```zsh
+yarn deploy:prod
+```
+
+#### [注意] GitHub Actions 経由の CI/CD デプロイフロー
+
+AWS の credential 情報を GitHub の Secrets として保存する。  
+キー名は以下の名前で保存。
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+
+上記の設定後、`main` ブランチへマージすると、GitHub Actions 経由で AWS へデプロイされる。
+
+### AWS へデプロイしたものを削除(Stack の削除)
+
+```zsh
+yarn destroy:prod
+```
+
+### パッケージのアップグレード(AWS CDK を含む)
+
+```zsh
+# ncu で最新パッケージかどうかチェック
+yarn nuc
+
+# すべてのパッケージをアップグレード
+yarn ncu:u
+
+# 特定のパッケージをアップグレード
+yarn ncu:u <package_name>
+```
+
 ## TODO
 
 - [ ] データ構造
